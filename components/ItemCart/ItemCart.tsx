@@ -5,8 +5,19 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card"
+import { useEffect, useState } from "react";
 
 export const ItemCart = () => {
+    const [count, setCount] = useState<number>(0);
+    const [value, setValue] = useState<number>(0);
+    
+    const sum = () => setCount(count + 1)
+    const sub = () => setCount(count - 1)
+    
+    useEffect(() => {
+        const totalValue = () => setValue(value * count)
+        totalValue()
+    },[count, value])
        
     return (
         <Card className="w-full">
@@ -22,15 +33,20 @@ export const ItemCart = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex w-full">
-                    <Button className="w-full rounded-e-none">-</Button>
-                    <Button variant={'ghost'} className="w-full rounded-none border">0</Button>
-                    <Button className="w-full rounded-l-none">+</Button>
+                <div className="flex w-full justify-between">
+                    <div className="flex">
+                        <Button className="w-full rounded-e-none" onClick={sub}>-</Button>
+                        <Button variant={'ghost'} className="max-w-20 rounded-none border">{count}</Button>
+                        <Button className="w-full rounded-l-none" onClick={sum}>+</Button>
+                    </div>
+                    <div>
+                        <h3 className="text-primary text-sm mt-3">R$ 15,00</h3>
+                    </div>
                 </div>
             </CardContent>
             <CardFooter className="flex flex-col items-center gap-3 border-t">
                 <h3 className="text-slate-800 text-lg mt-3">
-                    <span className="mr-1">Total R$</span><span>15,00</span>
+                    <span className="mr-1">Total R$</span><span>{value},00</span>
                 </h3>
                 <Button className="w-full">Enviar Pedido</Button>
             </CardFooter>
