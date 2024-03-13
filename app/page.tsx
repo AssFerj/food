@@ -13,9 +13,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { useState } from "react";
+import { ItemCart } from "@/components/ItemCart/ItemCart";
 
 
 export default function Home() {
+  const [count, setCount] = useState<number>(0);
   return (
     <main className="flex min-h-screen flex-col justify-start">
       <div className="min-w-screen flex justify-between px-10 py-5">
@@ -35,9 +38,12 @@ export default function Home() {
             <SheetContent>
               <SheetHeader>
                 <SheetTitle className="text-center text-3xl">Meu Pedido</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete your account
-                  and remove your data from our servers.
+                <SheetDescription className="flex flex-col items-center gap-3">
+                  <ItemCart/>
+                  {/* <h3 className="text-slate-800 text-lg">
+                    <span className="mr-1">Total R$</span><span>15,00</span>
+                  </h3>
+                  <Button className="w-full">Enviar Pedido</Button> */}
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
