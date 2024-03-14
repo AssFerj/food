@@ -1,6 +1,7 @@
 'use client'
 import { ItemCard } from "@/components/ItemCard/ItemCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { produtos } from "@/data";
 import Image from "next/image";
 
 
@@ -30,16 +31,15 @@ export default function Home() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="pizzas" className="flex justify-center gap-8">
-            <ItemCard/>
-            <ItemCard/>
+            <ItemCard product={{produtos.catogorias.pizzas.map()}}/>
           </TabsContent>
           <TabsContent value="hamburguers" className="flex justify-center gap-8">
-            <ItemCard/>
-            <ItemCard/>
+            {/* <ItemCard/>
+            <ItemCard/> */}
           </TabsContent>
           <TabsContent value="drinks" className="flex justify-center gap-8">
-            <ItemCard/>
-            <ItemCard/>
+            {/* <ItemCard/>
+            <ItemCard/> */}
           </TabsContent>
         </Tabs>
       </section>

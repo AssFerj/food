@@ -1,4 +1,6 @@
+'use client'
 import { Header } from "@/components/Header/Header";
+import { CartProvider } from "../contexts/cartContaxt";
 
 export default function PublicLayout({
   children,
@@ -8,8 +10,10 @@ export default function PublicLayout({
   return (
     <html lang="pt-br">
       <body>
-        <Header/>
-        {children}
+        <CartProvider>
+          <Header/>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

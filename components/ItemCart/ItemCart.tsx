@@ -1,4 +1,3 @@
-import { BellRing } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -6,49 +5,50 @@ import {
   CardFooter,
 } from "@/components/ui/card"
 import { useEffect, useState } from "react";
+import React from "react";
+import Image from "next/image";
+import { Product } from "@/types/productType";
+import { useCart } from "@/app/contexts/cartContaxt";
 
-export const ItemCart = () => {
-    const [count, setCount] = useState<number>(0);
-    const [value, setValue] = useState<number>(0);
+interface Props {
+    product: Product;
+}
+
+export const ItemCart: React.FC<Props> = ({product}) => {
+    const [count, setCount] = useState<number>(0)
+    const {addToCart} = useCart()
     
     const sum = () => setCount(count + 1)
     const sub = () => setCount(count - 1)
     
-    useEffect(() => {
-        const totalValue = () => setValue(value * count)
-        totalValue()
-    },[count, value])
+    const totalPrice = product.preco * count
        
     return (
         <Card className="w-full">
-            <CardContent className="gap-4 border rounded m-3">
+   
+            <CardContent className="gap-4 m-3">
                 <div className=" flex items-center space-x-4 p-4">
-                    <BellRing />
+                    <Image src={product.img} width={70} height={70} alt={product.nome} className="rounded-full" />
                     <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none">
-                        Push Notifications
+                            {product.nome}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                        Send notifications to device.
+                            {new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(product.preco)}
                         </p>
-                    </div>
-                </div>
-                <div className="flex w-full justify-between">
-                    <div className="flex">
-                        <Button className="w-full rounded-e-none" onClick={sub}>-</Button>
-                        <Button variant={'ghost'} className="max-w-20 rounded-none border">{count}</Button>
-                        <Button className="w-full rounded-l-none" onClick={sum}>+</Button>
-                    </div>
-                    <div>
-                        <h3 className="text-primary text-sm mt-3">R$ 15,00</h3>
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="flex flex-col items-center gap-3 border-t">
-                <h3 className="text-slate-800 text-lg mt-3">
-                    <span className="mr-1">Total R$</span><span>{value},00</span>
-                </h3>
-                <Button className="w-full">Enviar Pedido</Button>
+
+            <CardFooter className="flex w-full justify-between items-center -mt-10">
+                <div className="flex">
+                    <Button className="w-full rounded-e-none" onClick={sub}>-</Button>
+                    <Button variant={'ghost'} className="max-w-20 rounded-none border">{count}</Button>
+                    <Button className="w-full rounded-l-none" onClick={sum}>+</Button>
+                </div>
+                <div>
+                    <h3 className="text-primary text-sm font-bold mt-3">{new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(totalPrice)}</h3>
+                </div>
             </CardFooter>
             </Card>
     )
