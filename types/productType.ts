@@ -3,7 +3,7 @@ export interface Product {
     nome: string;
     descricao?: string;
     img: string;
-    preco: number;
-    tamanhos?: string[],
+    preco?: number | undefined | 0;
+    precos?: { tamanho: string; preco: number }[];
     type?: string;
 }

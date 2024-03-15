@@ -6,16 +6,19 @@ export const pedidos: any = [
     {id: 5, data: "20/10/2022", total: 250},
     {id: 6, data: "20/10/2022", total: 250},
   ]
-export const produtos = {
+export const products = {
     catogorias: {
         pizzas: [
             {
                 id: 1,
-                tamanhos: ['P', 'M', 'G'],
                 nome: 'Frango Catupiri',
                 descricao: 'Frango, Catupiri, Molho de Tomate',
                 img: 'https://jornadajs-food.s3.amazonaws.com/spicy.png',
-                preco: [35, 45, 55]
+                precos: [
+                    { tamanho: 'P', preco: 35 },
+                    { tamanho: 'M', preco: 45 },
+                    { tamanho: 'G', preco: 55 }
+                ]
             },
             {
                 id: 2,
@@ -23,7 +26,11 @@ export const produtos = {
                 nome: 'Portuguesa',
                 descricao: 'Presunto, Queijo, Catupiri, Molho de Tomate, Oregano',
                 img: 'https://jornadajs-food.s3.amazonaws.com/spicy.png',
-                preco: [35, 45, 55]
+                precos: [
+                    { tamanho: 'P', preco: 35 },
+                    { tamanho: 'M', preco: 45 },
+                    { tamanho: 'G', preco: 55 }
+                ]
             },
         ],
         hamburgueres: [
@@ -59,4 +66,18 @@ export const produtos = {
             },
         ]
     }
-  }
+ }
+
+ export const product = [
+    {
+        id: 1,
+        nome: 'Frango Catupiri',
+        descricao: 'Frango, Catupiri, Molho de Tomate',
+        img: 'https://jornadajs-food.s3.amazonaws.com/spicy.png',
+        precos: [
+            { tamanho: 'P', preco: 35 },
+            { tamanho: 'M', preco: 45 },
+            { tamanho: 'G', preco: 55 }
+        ]
+    },
+];
