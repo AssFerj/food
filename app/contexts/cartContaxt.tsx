@@ -1,16 +1,17 @@
+import { toast } from "sonner"
 import { Product } from '@/types/productType';
 import React, { createContext, useContext, useState } from 'react';
 
 interface CartContextType {
-  cart: Product[];
+  cartItens: Product[];
   addToCart: (product: Product) => void;
-  clearCart: () => void;
+  removeItemFromCart: (productId: number) => void;
 }
 
 const CartContext = createContext<CartContextType>({
-  cart: [],
+  cartItens: [],
   addToCart: () => {},
-  clearCart: () => {},
+  removeItemFromCart: () => {},
 });
 
 export const useCart = () => useContext(CartContext);
@@ -18,18 +19,26 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }: Readonly<{
     children: React.ReactNode;
   }>) => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cartItens, setCartItens] = useState<Product[]>([]);
 
   const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    const existProduct = cartItens.find((item) => item.id === product.id);
+    
+    if (existProduct) {
+      toast.warning(`${product.nome} já está na sacola.`)
+      return
+    }
+    setCartItens([...cartItens, product]);
+    toast.success(`${product.nome} adicionado a sacola.`)
   };
 
-  const clearCart = () => {
-    setCart([]);
+  const removeItemFromCart = (productId: number) => {
+    setCartItens(cartItens.filter(item => item.id !== productId));
+    toast.error(`Item removido da sacola.`)
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, clearCart }}>
+    <CartContext.Provider value={{ cartItens, addToCart, removeItemFromCart }}>
       {children}
     </CartContext.Provider>
   );

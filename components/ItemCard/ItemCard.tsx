@@ -24,46 +24,44 @@ export const ItemCard: React.FC<Props> = ({product}) => {
   };
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      console.error('Size not selected');
-      return;
+    let selectedPrice;
+
+    if (isMultiSize && selectedSize) {
+      const foundPrice = product.precos?.find((preco) => preco.tamanho === selectedSize);
+      if (!foundPrice) {
+          console.error(`Price for size ${selectedSize} not found`);
+          return;
+      }
+      selectedPrice = foundPrice.preco;
+    } else {
+        selectedPrice = product.preco;
     }
 
-    const selectedPrice = product.precos?.find(
-      (preco) => preco.tamanho === selectedSize
-    );
-    if (!selectedPrice) {
-      console.error(`Price for size ${selectedSize} not found`);
-      return;
-    }
-
-    const selectedProduct: Product = {
+    const selectedProduct = {
         ...product,
-        precos: [selectedPrice],
-      };
+        preco: typeof selectedPrice === 'number' ? selectedPrice : undefined,
+        precos: typeof selectedPrice === 'object' && selectedPrice !== null ? [selectedPrice] : undefined,
+    };
 
-      addToCart(selectedProduct);
+    addToCart(selectedProduct);
     };
 
     const isMultiSize = product.precos && product.precos.length > 1;
 
-    const selectedPrice = selectedSize
-      ? product.precos?.find((preco) => preco.tamanho === selectedSize)?.preco
-      : product.precos && product.precos.length === 1
-      ? product.precos[0].preco
+    const selectedPrice =
+    selectedSize && product.precos
+      ? product.precos.find((preco) => preco.tamanho === selectedSize)?.preco
       : product.preco ?? 0;
 
-    const priceToShow = selectedPrice !== undefined
-      ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(selectedPrice)
-      : product.preco !== undefined
-      ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco)
-      : '';
+      const priceToShow = selectedPrice !== undefined
+      ? new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(selectedPrice)
+      : "";
 
     return (
       <>
         <Card className="w-72">
           <CardHeader className="min-h-32">
-            <CardTitle>{product.nome}</CardTitle>
+            <CardTitle className="mb-2">{product.nome}</CardTitle>
             <CardDescription>{product.descricao}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">

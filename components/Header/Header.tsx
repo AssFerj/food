@@ -11,14 +11,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ItemCart } from "@/components/ItemCart/ItemCart";
-import { produtos } from "@/data";
 import { useCart } from "@/app/contexts/cartContaxt";
 
 export const Header = () => {
-  const {cart} = useCart()
+  const {cartItens} = useCart()
 
   const calculateTotal = () => {
-    return cart.reduce((total, product) => total + product.preco, 0);
+    return cartItens.reduce((total, product) => total + product.preco!, 0);
   };
 
   return (
@@ -39,15 +38,17 @@ export const Header = () => {
           <SheetContent>
             <SheetHeader>
               <SheetTitle className="text-center text-3xl">Meu Pedido</SheetTitle>
-              <SheetDescription className="flex flex-col items-center gap-3">
-                {cart.map(product => (
-                  <ItemCart key={product.id} product={product} />
-                ))}
-                <h3 className="text-slate-800 text-lg">
-                  <span className="mr-1">Total </span>{new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(calculateTotal())}
-                </h3>
-                <Button className="w-full">Enviar Pedido</Button>
-              </SheetDescription>
+              {cartItens.length === 0 ? <p className="text-center text-lg">Sua sacola está vazia</p> : 
+                <SheetDescription className="flex flex-col items-center gap-3">
+                  {cartItens.map(product => (
+                    <ItemCart key={product.id} product={product} />
+                  ))}
+                  <h3 className="text-slate-800 text-lg">
+                    <span className="mr-1">Total </span>{new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(calculateTotal())}
+                  </h3>
+                  <Button className="w-full">Enviar Pedido</Button>
+                </SheetDescription>
+              }
             </SheetHeader>
           </SheetContent>
         </Sheet>

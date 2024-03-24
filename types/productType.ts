@@ -6,4 +6,5 @@ export interface Product {
     preco?: number | undefined | 0;
     precos?: { tamanho: string; preco: number }[];
     type?: string;
+    quantity?: number;
 }

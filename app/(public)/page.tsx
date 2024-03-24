@@ -1,7 +1,7 @@
 'use client'
 import { ItemCard } from "@/components/ItemCard/ItemCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { product, products } from "@/data";
+import { products } from "@/data";
 import Image from "next/image";
 
 

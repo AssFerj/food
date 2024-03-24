@@ -1,6 +1,7 @@
 'use client'
 import { Header } from "@/components/Header/Header";
 import { CartProvider } from "../contexts/cartContaxt";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function PublicLayout({
   children,
@@ -13,6 +14,7 @@ export default function PublicLayout({
         <CartProvider>
           <Header/>
           {children}
+          <Toaster richColors/>
         </CartProvider>
       </body>
     </html>
